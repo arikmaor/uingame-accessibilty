@@ -10,6 +10,7 @@ import Settings from './Settings'
 
 export default class App extends React.Component {
   state = {
+    settings: {},
     settingsVisible: false,
     verifingPermission: true,
     location: null
@@ -32,9 +33,10 @@ export default class App extends React.Component {
     }
 
     const settings = await getUserSettings()
-    if (!settings.name) {
-      this.setState({settingsVisible: true})
-    }
+    this.setState({
+      settings,
+      settingsVisible: !settings.name
+    })
 
     setImmediate(() => SplashScreen.hide())
 
@@ -50,12 +52,16 @@ export default class App extends React.Component {
     this.setState({settingsVisible: true});
   }
 
-  closeSettings() {
-    this.setState({settingsVisible: false});
+  async closeSettings() {
+    const settings = await getUserSettings()
+    this.setState({
+      settings,
+      settingsVisible: false
+    });
   }
 
   render() {
-    const {settingsVisible, verifingPermission, location} = this.state
+    const {settings, settingsVisible, verifingPermission, location} = this.state
 
     if (verifingPermission) {
       return (
@@ -75,7 +81,7 @@ export default class App extends React.Component {
         >
           <Settings closeSettings={this.closeSettings}/>
         </Modal>
-        <MainScreen location={location} openSettings={this.openSettings}/>
+        <MainScreen settings={settings} location={location} openSettings={this.openSettings}/>
       </View>
     )
   }

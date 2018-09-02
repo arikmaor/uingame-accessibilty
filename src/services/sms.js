@@ -1,5 +1,6 @@
 import {Permissions, SMS} from 'expo'
-import {getUserSettings} from './userSettings'
+
+export const DEFAULT_MESSAGE = "אני זקוק לעזרה"
 
 export async function verifySmsPermissions() {
   try {
@@ -12,11 +13,15 @@ export async function verifySmsPermissions() {
   }
 }
 
-export async function sendDistressSms(phoneNumber) {
-  const {name, address} = await getUserSettings()
+export async function sendDistressSms(phoneNumber, name, address, location, message) {
   try {
     console.log('sending SMS to ' + phoneNumber)
-    const {result} = await SMS.sendSMSAsync(phoneNumber, "שלום, שמי " + name + '\nאני זקוק לעזרה בכתובת ' + address)
+    const {result} = await SMS.sendSMSAsync(phoneNumber, `
+      שם: ${name}
+      מיקום נוכחי: ${location}
+      כתובת מגורים: ${address}
+      ${message || DEFAULT_MESSAGE}
+    `.trim())
     return result === 'sent'
   } catch (error) {
     console.error(`Error sending sms to '${phoneNumber}' ` + error)

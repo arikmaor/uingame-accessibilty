@@ -1,18 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { Text, StyleSheet, Alert, View, Button, ActivityIndicator } from 'react-native';
-import call from 'react-native-phone-call';
-import {sendDistressSms} from './services/sms'
+import {sendDistressSms, DEFAULT_MESSAGE} from './services/sms'
+import { TextInput } from 'react-native-gesture-handler';
 
 export default class MainScreen extends React.Component {
   static propTypes = {
     openSettings: PropTypes.func.isRequired,
-    location: PropTypes.string
+    location: PropTypes.string,
+    settings: PropTypes.object
+  }
+
+  state = {
+    message: ''
   }
 
   async sendSms(number) {
     try {
-      const result = await sendDistressSms(number)
+      const result = await sendDistressSms(
+        number,
+        this.props.settings.name,
+        this.props.settings.address,
+        this.props.location,
+        this.state.message
+      )
       if (!result) {
         Alert.alert('הודעה לא נשלחה')
       }
@@ -24,54 +35,37 @@ export default class MainScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.subContainer}>
-          <Button
-            styles={styles.button}
-            title='call Police'
-            onPress={() => {
-              call({
-                number: '100',
-                prompt: false
-              })
-            }}
-          />
-          <Button
-            styles={styles.button}
-            title='sms Police'
-            onPress={() => this.sendSms('100')}
+        <View>
+          <TextInput
+            style={{height: 40}}
+            placeholder={DEFAULT_MESSAGE}
+            value={this.state.message}
+            onChangeText={(text) => this.setState({message: text})}
           />
         </View>
-        <View style={styles.subContainer}>
+        <View style={styles.rtlView}>
           <Button
             styles={styles.button}
-            title='Ambulance'
-            onPress={() => {
-              call({
-                number: '101'
-              })
-            }}
-          />
-          <Button
-            styles={styles.button}
-            title='sms Ambulance'
-            onPress={() => this.sendSms('101')}
-          />
-        </View>
-        <View style={styles.subContainer}>
-          <Button
-            styles={styles.button}
-            title='Fire'
-            onPress={() => {
-              call({
-                number: '102'
-              });
-            }}
-          />
-          <Button
-            styles={styles.button}
-            title='Sms Fire'
+            title='כיבוי אש'
             onPress={() => this.sendSms('102')}
           />
+          <Button
+            styles={styles.button}
+            title='מד״א'
+            onPress={() => this.sendSms('101')}
+          />
+          <Button
+            styles={styles.button}
+            title='משטרה'
+            onPress={() => this.sendSms('100')}
+          />
+          { this.props.settings.contactName && this.props.settings.contactPhoneNumber && (
+            <Button
+              styles={styles.button}
+              title={this.props.settings.contactName}
+              onPress={() => this.sendSms(this.props.settings.contactPhoneNumber)}
+            />
+          )}
         </View>
         <View style={styles.rtlView}>
           <Text>
@@ -81,7 +75,7 @@ export default class MainScreen extends React.Component {
         </View>
         <Button
           styles={styles.button}
-          title='Show Settings'
+          title='עדכון פרטים'
           onPress={() => {
             this.props.openSettings();
           }}

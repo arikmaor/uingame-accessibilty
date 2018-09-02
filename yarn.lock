@@ -3565,10 +3565,6 @@ react-native-maps@0.21.0:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
 
-react-native-phone-call@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.7.tgz#3fa53032ca7391ce1efde2ffb61a112901ca63a5"
-
 react-native-reanimated@1.0.0-alpha.3:
   version "1.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.0.0-alpha.3.tgz#42983aa41911791cd3186fd3a18a788c3d4c3601"
