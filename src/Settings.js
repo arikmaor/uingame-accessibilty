@@ -61,7 +61,7 @@ export default class SettingsModal extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 50,
+    margin: 22,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'stretch',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Alert, View } from 'react-native';
+import { StyleSheet, Text, Alert, View, Modal } from 'react-native';
 import {verifySmsPermissions} from './services/sms'
 import {verifyLocationPermissions, getCurrentLocation} from './services/location'
 
@@ -49,7 +49,7 @@ export default class App extends React.Component {
 
     if (verifingPermission) {
       return (
-        <View>
+        <View style={styles.container}>
           <Text>
             אנא אשר שליחת הודעות
           </Text>
@@ -57,6 +57,22 @@ export default class App extends React.Component {
       )
     }
 
-    return settingsVisible ? <Settings closeSettings={this.closeSettings}/> : <MainScreen location={location} openSettings={this.openSettings}/>
+    return (
+      <View style={styles.container}>
+        <Modal
+          visible={settingsVisible}
+          onRequestClose={this.closeSettings}
+        >
+          <Settings closeSettings={this.closeSettings}/>
+        </Modal>
+        <MainScreen location={location} openSettings={this.openSettings}/>
+      </View>
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
