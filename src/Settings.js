@@ -49,10 +49,7 @@ export default class SettingsModal extends React.Component {
       const hasPermission = await verifyLocationPermissions()
       if (hasPermission) {
         const address = await getCurrentLocation()
-        this.setState({settings: {
-          ...this.state.settings,
-          address
-        }})
+        this.setSetting('address', address)
       }
     } catch (error) {
       Alert.alert('שגיאה', 'שגיאה בגישה לנתוני מיקום')
@@ -63,6 +60,7 @@ export default class SettingsModal extends React.Component {
   setSetting = (key, val) => {
     this.setState({
       settings: {
+        ...this.state.settings,
         [key]: val
       }
     })
