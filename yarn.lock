@@ -776,6 +776,10 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-autobind-class-methods@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-autobind-class-methods/-/babel-plugin-autobind-class-methods-5.0.1.tgz#c311bc455b285a21e362bead7d444f75c9d1d92c"
+
 babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
@@ -1077,6 +1081,10 @@ babel-plugin-transform-regenerator@^6.5.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-regenerator/-/babel-plugin-transform-regenerator-6.26.0.tgz#e0703696fbde27f0a3efcacf8b4dca2f7b3a8f2f"
   dependencies:
     regenerator-transform "^0.10.0"
+
+babel-plugin-transform-remove-console@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-remove-console/-/babel-plugin-transform-remove-console-6.9.4.tgz#b980360c067384e24b357a588d807d3c83527780"
 
 babel-plugin-transform-strict-mode@^6.24.1:
   version "6.24.1"
