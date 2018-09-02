@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, Alert, View, Modal } from 'react-native';
+import {StyleSheet, Text, Alert, View, Modal} from 'react-native';
+import {SplashScreen} from 'expo'
 import {verifySmsPermissions} from './services/sms'
+import {getUserSettings} from './services/userSettings'
 import {verifyLocationPermissions, getCurrentLocation} from './services/location'
 
 import MainScreen from './MainScreen'
@@ -15,6 +17,7 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props)
+    SplashScreen.preventAutoHide()
     this.init()
   }
 
@@ -27,6 +30,13 @@ export default class App extends React.Component {
     } catch (error) {
       Alert.alert('שגיאה בקבלת הרשאות')
     }
+
+    const settings = await getUserSettings()
+    if (!settings.name) {
+      this.setState({settingsVisible: true})
+    }
+
+    setImmediate(() => SplashScreen.hide())
 
     try {
       const location = await getCurrentLocation()
