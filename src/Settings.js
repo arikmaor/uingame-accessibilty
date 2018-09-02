@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Modal, StyleSheet, TextInput, View, Button } from 'react-native';
-import {getUserSettings, setUserSettings} from './userSettings'
+import {getUserSettings, setUserSettings} from './services/userSettings'
 
 export default class SettingsModal extends React.Component {
   state = {
