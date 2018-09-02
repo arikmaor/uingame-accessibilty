@@ -45,7 +45,7 @@ export default class SettingsModal extends React.Component {
           />
           <TextInput
             style={{height: 40}}
-            placeholder="הכנס כתובת"
+            placeholder="הכנס כתובת מגורים"
             value={this.state.address}
             onChangeText={(text) => this.setState({address: text})}
           />
