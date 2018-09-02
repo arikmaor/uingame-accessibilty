@@ -21,7 +21,7 @@ export default class SelectContact extends React.Component {
     this.init()
   }
 
-  async init() {
+  init = async () => {
     const hasPermissions = await verifyContactsPermissions()
     if (hasPermissions) {
       const contacts = await getAllContacts()
@@ -34,12 +34,12 @@ export default class SelectContact extends React.Component {
     }
   }
 
-  async onContactSelected(id) {
+  onContactSelected = async (id) =>  {
     const contact = await getContactById(id)
     this.setState({selectedContact: contact})
   }
 
-  onPhoneNumberSelected(phoneNumberId, number, label) {
+  onPhoneNumberSelected = (phoneNumberId, number, label) => {
     const {id, name} = this.state.selectedContact
     this.props.selectContact(id, name, phoneNumberId, number, label)
     this.props.closeModal()

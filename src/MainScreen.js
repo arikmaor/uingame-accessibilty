@@ -15,7 +15,7 @@ export default class MainScreen extends React.Component {
     message: ''
   }
 
-  async sendSms(number) {
+  sendSms = async (number) => {
     try {
       const result = await sendDistressSms(
         number,
@@ -59,14 +59,16 @@ export default class MainScreen extends React.Component {
             title='משטרה'
             onPress={() => this.sendSms('100')}
           />
-          { this.props.settings.contactName && this.props.settings.contactPhoneNumber && (
+        </View>
+        { this.props.settings.contactName && this.props.settings.contactPhoneNumber && (
+          <View>
             <Button
               styles={styles.button}
               title={this.props.settings.contactName}
               onPress={() => this.sendSms(this.props.settings.contactPhoneNumber)}
             />
-          )}
-        </View>
+          </View>
+        )}
         <View style={styles.rtlView}>
           <Text>
             מיקום נוכחי:

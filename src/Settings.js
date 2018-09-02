@@ -29,12 +29,12 @@ export default class SettingsModal extends React.Component {
     this.loadSettings();
   }
 
-  async loadSettings() {
+  loadSettings = async () => {
     const settings = await getUserSettings()
     this.setState({settings})
   }
 
-  async saveSettings() {
+  saveSettings = async () => {
     try {
       await setUserSettings(this.state.settings)
       this.props.closeSettings();
@@ -43,7 +43,7 @@ export default class SettingsModal extends React.Component {
     }
   }
 
-  async useCurrentLocation() {
+  useCurrentLocation = async () => {
     this.setState({settingLocation: true})
     try {
       const hasPermission = await verifyLocationPermissions()
@@ -60,7 +60,7 @@ export default class SettingsModal extends React.Component {
     this.setState({settingLocation: false})
   }
 
-  async setSetting(key, val) {
+  setSetting = (key, val) => {
     this.setState({
       settings: {
         [key]: val
@@ -68,15 +68,15 @@ export default class SettingsModal extends React.Component {
     })
   }
 
-  openContactModal() {
+  openContactModal = () => {
     this.setState({settingContact: true})
   }
 
-  closeContactModal() {
+  closeContactModal = () => {
     this.setState({settingContact: false})
   }
 
-  selectContact(id, name, phoneNumberId, phoneNumber, phoneLabel) {
+  selectContact = (id, name, phoneNumberId, phoneNumber, phoneLabel) => {
     console.log(`${id}, ${name}, ${phoneNumberId}, ${phoneNumber}, ${phoneLabel}`)
     this.setState({
       settings: {

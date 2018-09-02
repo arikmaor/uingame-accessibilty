@@ -22,7 +22,7 @@ export default class App extends React.Component {
     this.init()
   }
 
-  async init() {
+  init = async () => {
     console.log('initializing...')
     try {
       await verifySmsPermissions()
@@ -48,11 +48,11 @@ export default class App extends React.Component {
     }
   }
 
-  openSettings() {
+  openSettings = () => {
     this.setState({settingsVisible: true});
   }
 
-  async closeSettings() {
+  closeSettings = async () => {
     const settings = await getUserSettings()
     this.setState({
       settings,
