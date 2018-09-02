@@ -5,7 +5,7 @@ export async function verifySmsPermissions() {
   try {
     console.log('Checking sms permissions...')
     const { status } = await Permissions.askAsync(Permissions.SMS);
-    console.log(status)
+    console.log(`SMS permission status: ${status}`)
     return status === 'granted'
   } catch (error) {
     console.error('Error verifing sms permissions ' + error)

@@ -1,14 +1,16 @@
 import React from 'react';
-import { Modal, Text, StyleSheet, Alert, View, Button } from 'react-native';
+import { Text, StyleSheet, Alert, View, Button } from 'react-native';
 import call from 'react-native-phone-call';
 import {verifySmsPermissions, sendDistressSms} from './sms'
+import {verifyLocationPermissions, getCurrentLocation} from './location'
 
 import SettingsModal from './SettingsModal'
 
 export default class App extends React.Component {
   state = {
     modalVisible: false,
-    verifingPermission: true
+    verifingPermission: true,
+    location: 'loading'
   };
 
   constructor(props) {
@@ -20,9 +22,12 @@ export default class App extends React.Component {
     console.log('initializing...')
     try {
       await verifySmsPermissions()
+      await verifyLocationPermissions()
       this.setState({verifingPermission: false})
+      const location = await getCurrentLocation()
+      this.setState({location})
     } catch (error) {
-      Alert.alert('שגיאה בקבלת הרשאות')
+      Alert.alert('שגיאה בקבלת הרשאות' + error)
     }
   }
 
@@ -111,6 +116,9 @@ export default class App extends React.Component {
             onPress={() => this.sendSms('102')}
           />
         </View>
+        <Text>
+          מיקום נוכחי: {this.state.location}
+        </Text>
         <Button
           styles={styles.button}
           title='Show Settings'
