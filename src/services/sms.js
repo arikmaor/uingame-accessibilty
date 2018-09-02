@@ -15,7 +15,7 @@ export async function verifySmsPermissions() {
 export async function sendDistressSms(phoneNumber) {
   const {name, address} = await getUserSettings()
   try {
-    console.log(SMS)
+    console.log('sending SMS to ' + phoneNumber)
     const {result} = await SMS.sendSMSAsync(phoneNumber, "שלום, שמי " + name + '\nאני זקוק לעזרה בכתובת ' + address)
     return result === 'sent'
   } catch (error) {
