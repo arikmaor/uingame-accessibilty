@@ -15,7 +15,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz"
   },
   "devDependencies": {
-    "babel-plugin-autobind-class-methods": "^5.0.1",
     "babel-plugin-transform-remove-console": "^6.9.4"
   }
 }

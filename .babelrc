@@ -1,8 +1,5 @@
 {
   "presets": ["babel-preset-expo"],
-  "plugins": [
-    "autobind-class-methods"
-  ],
   "env": {
     "development": {
       "plugins": ["transform-react-jsx-source"]
