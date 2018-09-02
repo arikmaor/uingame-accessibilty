@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Text, StyleSheet, Alert, View, Button } from 'react-native';
+import { Text, StyleSheet, Alert, View, Button, ActivityIndicator } from 'react-native';
 import call from 'react-native-phone-call';
 import {sendDistressSms} from './services/sms'
 
 export default class MainScreen extends React.Component {
   static propTypes = {
     openSettings: PropTypes.func.isRequired,
-    location: PropTypes.string.isRequired
+    location: PropTypes.string
   }
 
   async sendSms(number) {
@@ -69,13 +69,16 @@ export default class MainScreen extends React.Component {
           />
           <Button
             styles={styles.button}
-            title='sms Fire'
+            title='Sms Fire'
             onPress={() => this.sendSms('102')}
           />
         </View>
-        <Text>
-          מיקום נוכחי: {this.props.location}
-        </Text>
+        <View style={styles.rtlView}>
+          <Text>
+            מיקום נוכחי:
+          </Text>
+          {this.props.location ? <Text>{this.props.location}</Text> : <ActivityIndicator />}
+        </View>
         <Button
           styles={styles.button}
           title='Show Settings'
@@ -90,6 +93,7 @@ export default class MainScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    direction: 'rtl',
     margin: 50,
     flex: 1,
     backgroundColor: '#fff',
@@ -98,6 +102,14 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  rtlText: {
+    textAlign: 'right',
+    writingDirection: 'rtl'
+  },
+  rtlView: {
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between'
   },
   button: {

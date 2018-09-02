@@ -10,7 +10,7 @@ export default class App extends React.Component {
   state = {
     settingsVisible: false,
     verifingPermission: true,
-    location: 'טוען...'
+    location: null
   };
 
   constructor(props) {
