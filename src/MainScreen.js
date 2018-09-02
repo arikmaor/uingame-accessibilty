@@ -3,40 +3,11 @@ import PropTypes from 'prop-types'
 import { Text, StyleSheet, Alert, View, Button } from 'react-native';
 import call from 'react-native-phone-call';
 import {sendDistressSms} from './services/sms'
-import {getCurrentLocation} from './services/location'
 
-import SettingsModal from './Settings'
-
-export default class App extends React.Component {
+export default class MainScreen extends React.Component {
   static propTypes = {
-    showSettingsModal: PropTypes.func.isRequired
-  }
-
-  state = {
-    modalVisible: false,
-    location: 'loading'
-  };
-
-  constructor(props) {
-    super(props)
-    this.init()
-  }
-
-  async init() {
-    try {
-      const location = await getCurrentLocation()
-      this.setState({location})
-    } catch (error) {
-      this.setState({location: 'שגיאה'})
-    }
-  }
-
-  showSettingsModal() {
-    this.setState({modalVisible: true});
-  }
-
-  hideSettingsModal() {
-    this.setState({modalVisible: false});
+    openSettings: PropTypes.func.isRequired,
+    location: PropTypes.string.isRequired
   }
 
   async sendSms(number) {
@@ -53,10 +24,6 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <SettingsModal
-            visible={this.state.modalVisible}
-            closeModal={() => this.hideSettingsModal()}
-        />
         <View style={styles.subContainer}>
           <Button
             styles={styles.button}
@@ -107,13 +74,13 @@ export default class App extends React.Component {
           />
         </View>
         <Text>
-          מיקום נוכחי: {this.state.location}
+          מיקום נוכחי: {this.props.location}
         </Text>
         <Button
           styles={styles.button}
           title='Show Settings'
           onPress={() => {
-            this.showSettingsModal();
+            this.props.openSettings();
           }}
         />
       </View>

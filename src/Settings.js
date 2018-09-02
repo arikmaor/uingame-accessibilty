@@ -1,8 +1,12 @@
 import React from 'react';
-import { Alert, Modal, StyleSheet, TextInput, View, Button } from 'react-native';
+import PropTypes from 'prop-types'
+import { Alert, StyleSheet, TextInput, View, Button } from 'react-native';
 import {getUserSettings, setUserSettings} from './services/userSettings'
 
 export default class SettingsModal extends React.Component {
+  static propTypes = {
+    closeSettings: PropTypes.func.isRequired
+  }
   state = {
     name: '',
     address: ''
@@ -24,7 +28,7 @@ export default class SettingsModal extends React.Component {
   async saveSettings() {
     try {
       await setUserSettings(this.state)
-      this.props.closeModal();
+      this.props.closeSettings();
     } catch (error) {
       Alert.alert('שגיאה', 'שגיאה בשמירת הנתונים')
     }
@@ -32,47 +36,38 @@ export default class SettingsModal extends React.Component {
 
   render() {
     return (
-        <Modal
-            animationType="fade"
-            transparent={false}
-            visible={this.props.visible}
-            onRequestClose={() => {
-            return true
-            }}>
-            <View style={styles.modal}>
-                <TextInput
-                  style={{height: 40}}
-                  placeholder="הכנס שם"
-                  value={this.state.name}
-                  onChangeText={(text) => this.setState({name: text})}
-                />
-                <TextInput
-                  style={{height: 40}}
-                  placeholder="הכנס כתובת"
-                  value={this.state.address}
-                  onChangeText={(text) => this.setState({address: text})}
-                />
-                <Button
-                  styles={styles.button}
-                  title='Save'
-                  onPress={() => this.saveSettings()}
-                />
-            </View>
-        </Modal>
+        <View style={styles.container}>
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס שם"
+            value={this.state.name}
+            onChangeText={(text) => this.setState({name: text})}
+          />
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס כתובת"
+            value={this.state.address}
+            onChangeText={(text) => this.setState({address: text})}
+          />
+          <Button
+            styles={styles.button}
+            title='Save'
+            onPress={() => this.saveSettings()}
+          />
+        </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  button: {
-    color: 'red'
-  },
-  modal: {
-    margin: 70,
+  container: {
+    margin: 50,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'stretch',
-    justifyContent: 'space-evenly',
-    marginTop: 22
+    justifyContent: 'space-evenly'
+  },
+  button: {
+    backgroundColor: 'red'
   },
 });

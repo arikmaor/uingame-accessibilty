@@ -1,16 +1,16 @@
 import React from 'react';
-import { Text, StyleSheet, Alert, View, Button } from 'react-native';
-import call from 'react-native-phone-call';
-import {verifySmsPermissions, sendDistressSms} from './services/sms'
+import { Text, Alert, View } from 'react-native';
+import {verifySmsPermissions} from './services/sms'
 import {verifyLocationPermissions, getCurrentLocation} from './services/location'
 
 import MainScreen from './MainScreen'
-import SettingsModal from './Settings'
+import Settings from './Settings'
 
 export default class App extends React.Component {
   state = {
-    modalVisible: false,
-    verifingPermission: true
+    settingsVisible: false,
+    verifingPermission: true,
+    location: 'טוען...'
   };
 
   constructor(props) {
@@ -27,18 +27,27 @@ export default class App extends React.Component {
     } catch (error) {
       Alert.alert('שגיאה בקבלת הרשאות')
     }
+
+    try {
+      const location = await getCurrentLocation()
+      this.setState({location})
+    } catch (error) {
+      this.setState({location: 'שגיאה'})
+    }
   }
 
-  showSettingsModal() {
-    this.setState({modalVisible: true});
+  openSettings() {
+    this.setState({settingsVisible: true});
   }
 
-  hideSettingsModal() {
-    this.setState({modalVisible: false});
+  closeSettings() {
+    this.setState({settingsVisible: false});
   }
 
   render() {
-    if (this.state.verifingPermission) {
+    const {settingsVisible, verifingPermission, location} = this.state
+
+    if (verifingPermission) {
       return (
         <View>
           <Text>
@@ -48,6 +57,6 @@ export default class App extends React.Component {
       )
     }
 
-    return <MainScreen showSettingsModal={this.showSettingsModal}/>
+    return settingsVisible ? <Settings closeSettings={this.closeSettings}/> : <MainScreen location={location} openSettings={this.openSettings}/>
   }
 }

@@ -1,4 +1,5 @@
-import {Permissions, Location} from 'expo'
+import {Permissions, Location, Constants} from 'expo'
+import {Platform} from 'react-native'
 
 export async function verifyLocationPermissions() {
   try {
@@ -13,6 +14,10 @@ export async function verifyLocationPermissions() {
 
 export async function getCurrentLocation() {
   console.log('Getting current location...')
+  if (process.env.NODE_ENV === 'development' && Platform.OS === 'android' && !Constants.isDevice) {
+    console.log('Can\'t get location inside android emulator')
+    return 'רחוב 5 תל אביב'
+  }
   try {
     const position = await Location.getCurrentPositionAsync({})
     console.log('Position: ' + JSON.stringify(position))
