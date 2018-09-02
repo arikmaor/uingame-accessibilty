@@ -123,7 +123,7 @@ export default class SettingsModal extends React.Component {
           <Button
             styles={styles.button}
             title='Save'
-            disabled={!this.state.contactName}
+            disabled={!this.state.settings.name}
             onPress={this.saveSettings}
           />
         </View>
