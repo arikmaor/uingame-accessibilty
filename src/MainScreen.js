@@ -78,7 +78,7 @@ export default class MainScreen extends React.Component {
           <Text>
             מיקום נוכחי:
           </Text>
-          {this.props.location ? <Text>{this.props.location}</Text> : <ActivityIndicator />}
+          {this.props.location ? <Text style={{flex: 1}}>{this.props.location}</Text> : <ActivityIndicator />}
         </View>
         <Button
           title='עדכון פרטים'
