@@ -3,7 +3,22 @@ import PropTypes from 'prop-types'
 import { Text, StyleSheet, Alert, View, ActivityIndicator } from 'react-native';
 import Button from './components/Button'
 import {sendDistressSms, DEFAULT_MESSAGE} from './services/sms'
+import call from './services/call'
 import { TextInput } from 'react-native-gesture-handler';
+
+const EMERGENCY_NUMBERS = [{
+  title: 'כיבוי אש',
+  phone: '102',
+  sms: '0505960735'
+}, {
+  title: 'מד״א',
+  phone: '101',
+  sms: '0527000101'
+}, {
+  title: 'משטרה',
+  phone: '100',
+  sms: '0522020100'
+}]
 
 export default class MainScreen extends React.Component {
   static propTypes = {
@@ -34,45 +49,37 @@ export default class MainScreen extends React.Component {
   }
 
   render() {
+    const {isDeaf} = this.props.settings
     return (
       <View style={styles.container}>
-        {this.props.settings.isDeaf && (
-          <React.Fragment>
-            <View>
-              <TextInput
-                style={styles.input}
-                placeholder={DEFAULT_MESSAGE}
-                value={this.state.message}
-                onChangeText={(text) => this.setState({message: text})}
-              />
-            </View>
-            <View style={styles.rtlView}>
-              <Button
-                styles={styles.button}
-                title='כיבוי אש'
-                onPress={() => this.sendSms('102')}
-              />
-              <Button
-                styles={styles.button}
-                title='מד״א'
-                onPress={() => this.sendSms('101')}
-              />
-              <Button
-                styles={styles.button}
-                title='משטרה'
-                onPress={() => this.sendSms('100')}
-              />
-            </View>
-            { (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
-              <View>
-                <Button
-                  styles={styles.button}
-                  title='איש קשר'
-                  onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
-                />
-              </View>
-            )}
-          </React.Fragment>
+        {isDeaf && (
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder={DEFAULT_MESSAGE}
+              value={this.state.message}
+              onChangeText={(text) => this.setState({message: text})}
+            />
+          </View>
+        )}
+        <View style={styles.rtlView}>
+          {EMERGENCY_NUMBERS.map((item, idx) => (
+            <Button
+              key={idx}
+              styles={styles.button}
+              title={item.title}
+              onPress={() => isDeaf ? this.sendSms(item.sms) : call(item.phone)}
+            />
+          ))}
+        </View>
+        { isDeaf && (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
+          <View>
+            <Button
+              styles={styles.button}
+              title='איש קשר'
+              onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
+            />
+          </View>
         )}
         <View style={styles.rtlView}>
           <Text>
