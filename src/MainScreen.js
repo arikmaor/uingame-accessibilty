@@ -39,7 +39,7 @@ export default class MainScreen extends React.Component {
           <React.Fragment>
             <View>
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder={DEFAULT_MESSAGE}
                 value={this.state.message}
                 onChangeText={(text) => this.setState({message: text})}
@@ -100,20 +100,14 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'space-evenly'
   },
-  subContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  rtlText: {
-    textAlign: 'right',
-    writingDirection: 'rtl'
-  },
   rtlView: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between'
   },
   button: {
-    margin: 10,
-    color: 'red'
+    margin: 10
+  },
+  input: {
+    height: 40
   }
 });

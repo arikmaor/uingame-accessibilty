@@ -67,13 +67,13 @@ export default class SettingsModal extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-          <View style={{flexDirection: "row-reverse", alignItems: 'center', justifyContent: 'center'}}>
+          <View style={styles.pickerContainer}>
             <Text>
               סוג הבעיה:
             </Text>
             <Picker
               selectedValue={!!this.state.settings.isDeaf}
-              style={{width: '40%'}}
+              style={styles.picker}
               onValueChange={val => this.setSetting('isDeaf', val)}
             >
               <Picker.Item label="חירש" value={true} />
@@ -83,14 +83,14 @@ export default class SettingsModal extends React.Component {
           { this.state.settings.isDeaf && (
             <React.Fragment>
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder="הכנס שם"
                 value={this.state.settings.name}
                 onChangeText={(text) => this.setSetting('name', text)}
               />
-              <View style={{flexDirection: 'row-reverse'}}>
+              <View style={styles.addressContainer}>
                 <TextInput
-                  style={{height: 40, flex: 1}}
+                  style={styles.flexInput}
                   placeholder="הכנס כתובת מגורים"
                   editable={!this.state.settingLocation}
                   value={this.state.settings.address}
@@ -99,25 +99,25 @@ export default class SettingsModal extends React.Component {
                 {this.state.settingLocation ? <ActivityIndicator /> : <Ionicons onPress={this.useCurrentLocation} name="md-compass" size={32} color="green" />}
               </View>
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder="הכנס שם איש קשר"
                 value={this.state.settings.contactName}
                 onChangeText={(text) => this.setSetting('contactName', text)}
               />
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder="הכנס טלפון"
                 value={this.state.settings.contactPhone}
                 onChangeText={(text) => this.setSetting('contactPhone', text)}
               />
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder="הכנס שם איש קשר נוסף"
                 value={this.state.settings.contactName2}
                 onChangeText={(text) => this.setSetting('contactName2', text)}
               />
               <TextInput
-                style={{height: 40}}
+                style={styles.input}
                 placeholder="הכנס טלפון"
                 value={this.state.settings.contactPhone2}
                 onChangeText={(text) => this.setSetting('contactPhone2', text)}
@@ -125,7 +125,6 @@ export default class SettingsModal extends React.Component {
             </React.Fragment>
           )}
           <Button
-            styles={styles.button}
             title='Save'
             disabled={this.state.settings.isDeaf && !this.state.settings.name}
             onPress={this.saveSettings}
@@ -143,7 +142,22 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'space-evenly'
   },
-  button: {
-    backgroundColor: 'red'
+  input: {
+    height: 40
   },
+  flexInput: {
+    height: 40,
+    flex: 1
+  },
+  pickerContainer: {
+    flexDirection: "row-reverse",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  picker: {
+    width: '40%'
+  },
+  addressContainer: {
+    flexDirection: 'row-reverse'
+  }
 });
