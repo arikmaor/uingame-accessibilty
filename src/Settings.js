@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {Alert, StyleSheet, TextInput, View, Button, ActivityIndicator, Picker, Text} from 'react-native';
+import {Alert, StyleSheet, TextInput, View, ActivityIndicator, Picker, Text} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+import Button from './components/Button'
 import {getUserSettings, setUserSettings} from './services/userSettings'
 import {getCurrentLocation, verifyLocationPermissions} from './services/location'
 
@@ -76,8 +77,8 @@ export default class SettingsModal extends React.Component {
               style={styles.picker}
               onValueChange={val => this.setSetting('isDeaf', val)}
             >
-              <Picker.Item label="חירש" value={true} />
               <Picker.Item label="עיוור" value={false} />
+              <Picker.Item label="חירש" value={true} />
             </Picker>
           </View>
           { this.state.settings.isDeaf && (

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Text, StyleSheet, Alert, View, Button, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, Alert, View, ActivityIndicator } from 'react-native';
+import Button from './components/Button'
 import {sendDistressSms, DEFAULT_MESSAGE} from './services/sms'
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -80,7 +81,6 @@ export default class MainScreen extends React.Component {
           {this.props.location ? <Text>{this.props.location}</Text> : <ActivityIndicator />}
         </View>
         <Button
-          styles={styles.button}
           title='עדכון פרטים'
           onPress={() => {
             this.props.openSettings();
@@ -103,9 +103,6 @@ const styles = StyleSheet.create({
   rtlView: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between'
-  },
-  button: {
-    margin: 10
   },
   input: {
     height: 40

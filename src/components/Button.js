@@ -1,0 +1,6 @@
+import React from 'react'
+import {Button} from 'react-native'
+
+export default (props) => (
+  <Button color='#000493' {...props} />
+)
