@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, Alert, View, Modal} from 'react-native';
-import {SplashScreen} from 'expo'
+import {SplashScreen, ScreenOrientation} from 'expo'
 import {verifySmsPermissions} from './services/sms'
 import {getUserSettings} from './services/userSettings'
 import {verifyLocationPermissions, getCurrentLocation} from './services/location'
@@ -19,6 +19,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     SplashScreen.preventAutoHide()
+    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP)
     this.init()
   }
 
