@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {Alert, StyleSheet, TextInput, View, Button, ActivityIndicator} from 'react-native';
+import {Alert, StyleSheet, TextInput, View, Button, ActivityIndicator, Picker, Text} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {getUserSettings, setUserSettings} from './services/userSettings'
 import {getCurrentLocation, verifyLocationPermissions} from './services/location'
@@ -12,6 +12,7 @@ export default class SettingsModal extends React.Component {
   state = {
     settingLocation: false,
     settings: {
+      isDeaf: false,
       name: '',
       address: '',
       contactName: '',
@@ -66,50 +67,67 @@ export default class SettingsModal extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-          <TextInput
-            style={{height: 40}}
-            placeholder="הכנס שם"
-            value={this.state.settings.name}
-            onChangeText={(text) => this.setSetting('name', text)}
-          />
-          <View style={{flexDirection: 'row-reverse'}}>
-            <TextInput
-              style={{height: 40, flex: 1}}
-              placeholder="הכנס כתובת מגורים"
-              editable={!this.state.settingLocation}
-              value={this.state.settings.address}
-              onChangeText={(text) => this.setSetting('address', text)}
-            />
-            {this.state.settingLocation ? <ActivityIndicator /> : <Ionicons onPress={this.useCurrentLocation} name="md-compass" size={32} color="green" />}
+          <View style={{flexDirection: "row-reverse", alignItems: 'center', justifyContent: 'center'}}>
+            <Text>
+              סוג הבעיה:
+            </Text>
+            <Picker
+              selectedValue={!!this.state.settings.isDeaf}
+              style={{width: '40%'}}
+              onValueChange={val => this.setSetting('isDeaf', val)}
+            >
+              <Picker.Item label="חירש" value={true} />
+              <Picker.Item label="עיוור" value={false} />
+            </Picker>
           </View>
-          <TextInput
-            style={{height: 40}}
-            placeholder="הכנס שם איש קשר"
-            value={this.state.settings.contactName}
-            onChangeText={(text) => this.setSetting('contactName', text)}
-          />
-          <TextInput
-            style={{height: 40}}
-            placeholder="הכנס טלפון"
-            value={this.state.settings.contactPhone}
-            onChangeText={(text) => this.setSetting('contactPhone', text)}
-          />
-          <TextInput
-            style={{height: 40}}
-            placeholder="הכנס שם איש קשר נוסף"
-            value={this.state.settings.contactName2}
-            onChangeText={(text) => this.setSetting('contactName2', text)}
-          />
-          <TextInput
-            style={{height: 40}}
-            placeholder="הכנס טלפון"
-            value={this.state.settings.contactPhone2}
-            onChangeText={(text) => this.setSetting('contactPhone2', text)}
-          />
+          { this.state.settings.isDeaf && (
+            <React.Fragment>
+              <TextInput
+                style={{height: 40}}
+                placeholder="הכנס שם"
+                value={this.state.settings.name}
+                onChangeText={(text) => this.setSetting('name', text)}
+              />
+              <View style={{flexDirection: 'row-reverse'}}>
+                <TextInput
+                  style={{height: 40, flex: 1}}
+                  placeholder="הכנס כתובת מגורים"
+                  editable={!this.state.settingLocation}
+                  value={this.state.settings.address}
+                  onChangeText={(text) => this.setSetting('address', text)}
+                />
+                {this.state.settingLocation ? <ActivityIndicator /> : <Ionicons onPress={this.useCurrentLocation} name="md-compass" size={32} color="green" />}
+              </View>
+              <TextInput
+                style={{height: 40}}
+                placeholder="הכנס שם איש קשר"
+                value={this.state.settings.contactName}
+                onChangeText={(text) => this.setSetting('contactName', text)}
+              />
+              <TextInput
+                style={{height: 40}}
+                placeholder="הכנס טלפון"
+                value={this.state.settings.contactPhone}
+                onChangeText={(text) => this.setSetting('contactPhone', text)}
+              />
+              <TextInput
+                style={{height: 40}}
+                placeholder="הכנס שם איש קשר נוסף"
+                value={this.state.settings.contactName2}
+                onChangeText={(text) => this.setSetting('contactName2', text)}
+              />
+              <TextInput
+                style={{height: 40}}
+                placeholder="הכנס טלפון"
+                value={this.state.settings.contactPhone2}
+                onChangeText={(text) => this.setSetting('contactPhone2', text)}
+              />
+            </React.Fragment>
+          )}
           <Button
             styles={styles.button}
             title='Save'
-            disabled={!this.state.settings.name}
+            disabled={this.state.settings.isDeaf && !this.state.settings.name}
             onPress={this.saveSettings}
           />
         </View>

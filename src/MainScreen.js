@@ -35,39 +35,43 @@ export default class MainScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <TextInput
-            style={{height: 40}}
-            placeholder={DEFAULT_MESSAGE}
-            value={this.state.message}
-            onChangeText={(text) => this.setState({message: text})}
-          />
-        </View>
-        <View style={styles.rtlView}>
-          <Button
-            styles={styles.button}
-            title='כיבוי אש'
-            onPress={() => this.sendSms('102')}
-          />
-          <Button
-            styles={styles.button}
-            title='מד״א'
-            onPress={() => this.sendSms('101')}
-          />
-          <Button
-            styles={styles.button}
-            title='משטרה'
-            onPress={() => this.sendSms('100')}
-          />
-        </View>
-        { (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
-          <View>
-            <Button
-              styles={styles.button}
-              title='איש קשר'
-              onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
-            />
-          </View>
+        {this.props.settings.isDeaf && (
+          <React.Fragment>
+            <View>
+              <TextInput
+                style={{height: 40}}
+                placeholder={DEFAULT_MESSAGE}
+                value={this.state.message}
+                onChangeText={(text) => this.setState({message: text})}
+              />
+            </View>
+            <View style={styles.rtlView}>
+              <Button
+                styles={styles.button}
+                title='כיבוי אש'
+                onPress={() => this.sendSms('102')}
+              />
+              <Button
+                styles={styles.button}
+                title='מד״א'
+                onPress={() => this.sendSms('101')}
+              />
+              <Button
+                styles={styles.button}
+                title='משטרה'
+                onPress={() => this.sendSms('100')}
+              />
+            </View>
+            { (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
+              <View>
+                <Button
+                  styles={styles.button}
+                  title='איש קשר'
+                  onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
+                />
+              </View>
+            )}
+          </React.Fragment>
         )}
         <View style={styles.rtlView}>
           <Text>
