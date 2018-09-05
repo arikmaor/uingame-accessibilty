@@ -15,10 +15,10 @@ export default class MainScreen extends React.Component {
     message: ''
   }
 
-  sendSms = async (number) => {
+  sendSms = async (...numbers) => {
     try {
       const result = await sendDistressSms(
-        number,
+        numbers,
         this.props.settings.name,
         this.props.settings.address,
         this.props.location,
@@ -60,12 +60,12 @@ export default class MainScreen extends React.Component {
             onPress={() => this.sendSms('100')}
           />
         </View>
-        { this.props.settings.contactName && this.props.settings.contactPhoneNumber && (
+        { (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
           <View>
             <Button
               styles={styles.button}
-              title={this.props.settings.contactName}
-              onPress={() => this.sendSms(this.props.settings.contactPhoneNumber)}
+              title='איש קשר'
+              onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
             />
           </View>
         )}

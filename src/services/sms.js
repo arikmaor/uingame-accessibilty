@@ -13,10 +13,11 @@ export async function verifySmsPermissions() {
   }
 }
 
-export async function sendDistressSms(phoneNumber, name, address, location, message) {
+export async function sendDistressSms(phoneNumbers, name, address, location, message) {
+  const filterredPhoneNumbers = phoneNumbers.filter(x => !!x)
   try {
-    console.log('sending SMS to ' + phoneNumber)
-    const {result} = await SMS.sendSMSAsync(phoneNumber, `
+    console.log('sending SMS to ' + filterredPhoneNumbers)
+    const {result} = await SMS.sendSMSAsync(filterredPhoneNumbers, `
       שם: ${name}
       מיקום נוכחי: ${location}
       כתובת מגורים: ${address}
@@ -24,7 +25,7 @@ export async function sendDistressSms(phoneNumber, name, address, location, mess
     `.trim())
     return result === 'sent'
   } catch (error) {
-    console.error(`Error sending sms to '${phoneNumber}' ` + error)
+    console.error(`Error sending sms to '${filterredPhoneNumbers}' ` + error)
     throw error
   }
 }

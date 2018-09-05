@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {Alert, StyleSheet, TextInput, View, Button, ActivityIndicator, Text, Modal} from 'react-native';
+import {Alert, StyleSheet, TextInput, View, Button, ActivityIndicator} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {getUserSettings, setUserSettings} from './services/userSettings'
 import {getCurrentLocation, verifyLocationPermissions} from './services/location'
-import SelectContactModal from './SelectContact'
 
 export default class SettingsModal extends React.Component {
   static propTypes = {
@@ -12,15 +11,13 @@ export default class SettingsModal extends React.Component {
   }
   state = {
     settingLocation: false,
-    settingContact: false,
     settings: {
       name: '',
       address: '',
-      contactId: '',
       contactName: '',
-      contactPhoneNumberId: '',
-      contactPhoneLabel: '',
-      contactPhoneNumber: '',
+      contactPhone: '',
+      contactName2: '',
+      contactPhone2: '',
     }
   }
 
@@ -66,38 +63,9 @@ export default class SettingsModal extends React.Component {
     })
   }
 
-  openContactModal = () => {
-    this.setState({settingContact: true})
-  }
-
-  closeContactModal = () => {
-    this.setState({settingContact: false})
-  }
-
-  selectContact = (id, name, phoneNumberId, phoneNumber, phoneLabel) => {
-    console.log(`${id}, ${name}, ${phoneNumberId}, ${phoneNumber}, ${phoneLabel}`)
-    this.setState({
-      settings: {
-        ...this.state.settings,
-        contactId: id,
-        contactName: name,
-        contactPhoneNumberId: phoneNumberId,
-        contactPhoneNumber: phoneNumber,
-        contactPhoneLabel: phoneLabel,
-        settingContact: false
-      }
-    })
-  }
-
   render() {
     return (
         <View style={styles.container}>
-          <Modal
-            visible={this.state.settingContact}
-            onRequestClose={this.closeContactModal}
-          >
-            <SelectContactModal closeModal={this.closeContactModal} selectContact={this.selectContact}/>
-          </Modal>
           <TextInput
             style={{height: 40}}
             placeholder="הכנס שם"
@@ -114,10 +82,30 @@ export default class SettingsModal extends React.Component {
             />
             {this.state.settingLocation ? <ActivityIndicator /> : <Ionicons onPress={this.useCurrentLocation} name="md-compass" size={32} color="green" />}
           </View>
-          <View style={{flexDirection: 'row-reverse'}}>
-            <Text style={{height: 40, flex: 1}}>איש קשר: {this.state.settings.contactName} - {this.state.settings.contactPhoneLabel}</Text>
-            <Ionicons onPress={this.openContactModal} name="md-contact" size={32} color="green" />
-          </View>
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס שם איש קשר"
+            value={this.state.settings.contactName}
+            onChangeText={(text) => this.setSetting('contactName', text)}
+          />
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס טלפון"
+            value={this.state.settings.contactPhone}
+            onChangeText={(text) => this.setSetting('contactPhone', text)}
+          />
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס שם איש קשר נוסף"
+            value={this.state.settings.contactName2}
+            onChangeText={(text) => this.setSetting('contactName2', text)}
+          />
+          <TextInput
+            style={{height: 40}}
+            placeholder="הכנס טלפון"
+            value={this.state.settings.contactPhone2}
+            onChangeText={(text) => this.setSetting('contactPhone2', text)}
+          />
           <Button
             styles={styles.button}
             title='Save'
