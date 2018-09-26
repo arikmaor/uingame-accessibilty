@@ -81,12 +81,11 @@ export default class MainScreen extends React.Component {
             />
           </View>
         )}
-        <View style={styles.rtlView}>
-          <Text>
-            מיקום נוכחי:
-          </Text>
-          {this.props.location ? <Text style={{flex: 1}}>{this.props.location}</Text> : <ActivityIndicator />}
-        </View>
+        <Text>
+          מיקום נוכחי:{'\n'}
+          {this.props.location}
+        </Text>
+        {!this.props.location && <ActivityIndicator />}
         <Button
           title='עדכון פרטים'
           onPress={() => {
