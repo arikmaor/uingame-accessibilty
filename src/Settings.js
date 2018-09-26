@@ -77,8 +77,8 @@ export default class SettingsModal extends React.Component {
               style={styles.picker}
               onValueChange={val => this.setSetting('isDeaf', val)}
             >
-              <Picker.Item label="עיוור" value={false} />
-              <Picker.Item label="חירש" value={true} />
+              <Picker.Item label="בעל לקות ראייה" value={false} />
+              <Picker.Item label="כבד שמיעה" value={true} />
             </Picker>
           </View>
           { this.state.settings.isDeaf && (
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   picker: {
-    width: '40%'
+    flex: 1
   },
   addressContainer: {
     flexDirection: 'row-reverse'
