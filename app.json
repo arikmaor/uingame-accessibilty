@@ -6,7 +6,7 @@
     "privacy": "public",
     "sdkVersion": "29.0.0",
     "platforms": ["android"],
-    "version": "2.0.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -21,7 +21,8 @@
       "**/*"
     ],
     "android": {
-      "package": "com.uingame.accessibility"
+      "package": "com.uingame.accessibility",
+      "versionCode": 2
     }
   }
 }
