@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {Alert, StyleSheet, TextInput, View, ActivityIndicator, Picker, Text} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import {Alert, StyleSheet, TextInput, View, Picker, Text} from 'react-native';
 import Button from './components/Button'
 import {getUserSettings, setUserSettings} from './services/userSettings'
-import {getCurrentLocation, verifyLocationPermissions} from './services/location'
 
 export default class SettingsModal extends React.Component {
   static propTypes = {
     closeSettings: PropTypes.func.isRequired
   }
   state = {
-    settingLocation: false,
     settings: {
       isDeaf: false,
       name: '',
       address: '',
       contactName: '',
-      contactPhone: ''
+      contactPhone: '',
+      customMessage: ''
     }
   }
 
@@ -38,20 +36,6 @@ export default class SettingsModal extends React.Component {
     } catch (error) {
       Alert.alert('שגיאה', 'שגיאה בשמירת הנתונים')
     }
-  }
-
-  useCurrentLocation = async () => {
-    this.setState({settingLocation: true})
-    try {
-      const hasPermission = await verifyLocationPermissions()
-      if (hasPermission) {
-        const address = await getCurrentLocation()
-        this.setSetting('address', address)
-      }
-    } catch (error) {
-      Alert.alert('שגיאה', 'שגיאה בגישה לנתוני מיקום')
-    }
-    this.setState({settingLocation: false})
   }
 
   setSetting = (key, val) => {
@@ -90,16 +74,12 @@ export default class SettingsModal extends React.Component {
                 value={this.state.settings.name}
                 onChangeText={(text) => this.setSetting('name', text)}
               />
-              <View style={styles.addressContainer}>
-                <TextInput
-                  style={styles.flexInput}
-                  placeholder="הכנס כתובת מגורים"
-                  editable={!this.state.settingLocation}
-                  value={this.state.settings.address}
-                  onChangeText={(text) => this.setSetting('address', text)}
-                />
-                {this.state.settingLocation ? <ActivityIndicator /> : <Ionicons onPress={this.useCurrentLocation} name="md-compass" size={32} color="green" />}
-              </View>
+              <TextInput
+                style={styles.input}
+                placeholder="הכנס כתובת מגורים"
+                value={this.state.settings.address}
+                onChangeText={(text) => this.setSetting('address', text)}
+              />
             </React.Fragment>
           )}
           <TextInput
@@ -114,6 +94,15 @@ export default class SettingsModal extends React.Component {
             value={this.state.settings.contactPhone}
             onChangeText={(text) => this.setSetting('contactPhone', text)}
           />
+          { this.state.settings.isDeaf && (
+            <TextInput
+              style={styles.input}
+              placeholder="פרטים קבועים שישלחו בהודעה"
+              multiline
+              value={this.state.settings.customMessage}
+              onChangeText={(text) => this.setSetting('customMessage', text)}
+            />
+          )}
           <Button
             title='שמור'
             disabled={this.state.settings.isDeaf && !this.state.settings.name}
@@ -139,11 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   input: {
-    height: 40
-  },
-  flexInput: {
-    height: 40,
-    flex: 1
+    paddingBottom: 10
   },
   pickerContainer: {
     flexDirection: 'row',

@@ -28,7 +28,16 @@ export default class MainScreen extends React.Component {
   }
 
   state = {
-    message: ''
+    message: DEFAULT_MESSAGE
+  }
+
+  static getDerivedStateFromProps(props) {
+    if (props.settings.customMessage) {
+      return {
+        message: `${DEFAULT_MESSAGE}\n${props.settings.customMessage}`
+      }
+    }
+    return null
   }
 
   sendSms = async (...numbers) => {
@@ -58,6 +67,7 @@ export default class MainScreen extends React.Component {
               style={styles.input}
               placeholder={DEFAULT_MESSAGE}
               value={this.state.message}
+              multiline
               onChangeText={(text) => this.setState({message: text})}
             />
           </View>
@@ -104,13 +114,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'stretch',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-between'
   },
   rtlView: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between'
   },
   input: {
-    height: 40
+    paddingBottom: 10
   }
 });
