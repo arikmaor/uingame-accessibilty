@@ -72,12 +72,12 @@ export default class MainScreen extends React.Component {
             />
           ))}
         </View>
-        { isDeaf && (this.props.settings.contactPhone || this.props.settings.contactPhone2) && (
+        { this.props.settings.contactPhone && (
           <View>
             <Button
               styles={styles.button}
               title='איש קשר'
-              onPress={() => this.sendSms(this.props.settings.contactPhone, this.props.settings.contactPhone2)}
+              onPress={() => isDeaf ? this.sendSms(this.props.settings.contactPhone) : call(this.props.settings.contactPhone)}
             />
           </View>
         )}
