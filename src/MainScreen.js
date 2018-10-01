@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Text, StyleSheet, Alert, View, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, Alert, View, ActivityIndicator, TouchableHighlight } from 'react-native';
 import Button from './components/Button'
 import {sendDistressSms, DEFAULT_MESSAGE} from './services/sms'
 import call from './services/call'
@@ -61,6 +61,9 @@ export default class MainScreen extends React.Component {
     const {isDeaf} = this.props.settings
     return (
       <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>קריאה לעזרה</Text>
+        </View>
         {isDeaf && (
           <View>
             <TextInput
@@ -72,25 +75,30 @@ export default class MainScreen extends React.Component {
             />
           </View>
         )}
-        <View style={styles.rtlView}>
-          {EMERGENCY_NUMBERS.map((item, idx) => (
-            <Button
-              key={idx}
-              styles={styles.button}
-              title={item.title}
-              onPress={() => isDeaf ? this.sendSms(item.sms) : call(item.phone)}
-            />
-          ))}
+        <View style={styles.buttonsLine}>
+          <TouchableHighlight onPress={() => isDeaf ? this.sendSms(EMERGENCY_NUMBERS[0].sms) : call(EMERGENCY_NUMBERS[0].phone)} underlayColor="white">
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>{EMERGENCY_NUMBERS[0].title}</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => isDeaf ? this.sendSms(EMERGENCY_NUMBERS[1].sms) : call(EMERGENCY_NUMBERS[1].phone)} underlayColor="white">
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>{EMERGENCY_NUMBERS[1].title}</Text>
+            </View>
+          </TouchableHighlight>
         </View>
-        { this.props.settings.contactPhone && (
-          <View>
-            <Button
-              styles={styles.button}
-              title='איש קשר'
-              onPress={() => isDeaf ? this.sendSms(this.props.settings.contactPhone) : call(this.props.settings.contactPhone)}
-            />
-          </View>
-        )}
+        <View style={styles.buttonsLine}>
+          <TouchableHighlight onPress={() => isDeaf ? this.sendSms(EMERGENCY_NUMBERS[2].sms) : call(EMERGENCY_NUMBERS[2].phone)} underlayColor="white">
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>{EMERGENCY_NUMBERS[2].title}</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => !this.props.settings.contactPhone ? Alert.alert('לא הוזן איש קשר במסך ההגדרות') : isDeaf ? this.sendSms(this.props.settings.contactPhone) : call(this.props.settings.contactPhone)} underlayColor="white">
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>איש קשר</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
         <Text>
           מיקום נוכחי:{'\n'}
           {this.props.location}
@@ -116,9 +124,29 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'space-between'
   },
-  rtlView: {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between'
+  headerContainer: {
+    alignSelf: 'center',
+  },
+  header: {
+    fontWeight: 'bold'
+  },
+  buttonsLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  button: {
+    elevation: 4,
+    backgroundColor: '#000493',
+    borderRadius: 2,
+    height: 70,
+    width: 70,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    padding: 8,
+    fontWeight: '500',
   },
   input: {
     paddingBottom: 10
