@@ -21,7 +21,7 @@ export async function sendDistressSms(phoneNumbers, name, address, location, mes
       ${message || DEFAULT_MESSAGE}
       שם: ${name}
       מיקום נוכחי: ${location}
-      כתובת מגורים: ${address}
+      ${address ? `כתובת מגורים: ${address}` : ''}
     `.trim())
     return result === 'sent'
   } catch (error) {
