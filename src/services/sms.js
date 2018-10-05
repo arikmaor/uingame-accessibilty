@@ -18,10 +18,10 @@ export async function sendDistressSms(phoneNumbers, name, address, location, mes
   try {
     console.log('sending SMS to ' + filterredPhoneNumbers)
     const {result} = await SMS.sendSMSAsync(filterredPhoneNumbers, `
+      ${message || DEFAULT_MESSAGE}
       שם: ${name}
       מיקום נוכחי: ${location}
       כתובת מגורים: ${address}
-      ${message || DEFAULT_MESSAGE}
     `.trim())
     return result === 'sent'
   } catch (error) {

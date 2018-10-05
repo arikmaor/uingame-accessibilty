@@ -55,7 +55,7 @@ export default class SettingsModal extends React.Component {
           </View>
           <View style={styles.pickerContainer}>
             <Text>
-              סוג הלקות:
+              סוג הנגישות:
             </Text>
             <Picker
               selectedValue={!!this.state.settings.isDeaf}

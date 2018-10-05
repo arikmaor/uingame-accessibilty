@@ -62,7 +62,7 @@ export default class MainScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>קריאה לעזרה</Text>
+          <Text style={styles.header}>קריאת מצוקה</Text>
         </View>
         {isDeaf && (
           <View>

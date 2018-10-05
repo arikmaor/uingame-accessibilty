@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "קריאה לעזרה",
-    "description": "This project is really great.",
+    "name": "קריאת מצוקה",
+    "description": "קריאת מצוקה ללקויי שמיעה וראייה",
     "slug": "uingame-accessibilty",
     "privacy": "public",
     "sdkVersion": "29.0.0",
