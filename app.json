@@ -4,7 +4,7 @@
     "description": "קריאת מצוקה ללקויי שמיעה וראייה",
     "slug": "uingame-accessibilty",
     "privacy": "public",
-    "sdkVersion": "29.0.0",
+    "sdkVersion": "30.0.0",
     "platforms": ["android"],
     "version": "1.0.0",
     "orientation": "portrait",
