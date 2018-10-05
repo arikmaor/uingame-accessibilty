@@ -138,15 +138,16 @@ const styles = StyleSheet.create({
     elevation: 4,
     backgroundColor: '#000493',
     borderRadius: 2,
-    height: 70,
-    width: 70,
+    height: 80,
+    width: 80,
     justifyContent: 'center'
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
     padding: 8,
-    fontWeight: '500',
+    fontSize: 18,
+    fontWeight: '700',
   },
   input: {
     paddingBottom: 10
