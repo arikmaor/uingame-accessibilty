@@ -22,7 +22,7 @@
     ],
     "android": {
       "package": "com.uingame.accessibility",
-      "versionCode": 5
+      "versionCode": 6
     }
   }
 }
