@@ -34,8 +34,8 @@ export default class App extends React.Component {
 
     const settings = await getUserSettings()
     this.setState({
-      settings,
-      settingsVisible: !settings.name
+      settings: settings || {},
+      settingsVisible: !settings
     })
 
     try {
@@ -53,7 +53,7 @@ export default class App extends React.Component {
   closeSettings = async () => {
     const settings = await getUserSettings()
     this.setState({
-      settings,
+      settings: settings || {},
       settingsVisible: false
     });
   }

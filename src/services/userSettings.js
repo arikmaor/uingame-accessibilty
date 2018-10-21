@@ -13,7 +13,7 @@ export async function getUserSettings() {
     console.error("Error loading user settings. " + error)
   }
 
-  return settings || {}
+  return settings
 }
 
 export async function setUserSettings(newSettings) {

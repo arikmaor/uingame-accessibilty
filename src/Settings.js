@@ -26,7 +26,9 @@ export default class SettingsModal extends React.Component {
 
   loadSettings = async () => {
     const settings = await getUserSettings()
-    this.setState({settings})
+    this.setState({
+      settings: settings || {}
+    })
   }
 
   saveSettings = async () => {
