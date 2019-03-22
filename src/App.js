@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, Alert, View, Modal} from 'react-native';
 import {ScreenOrientation} from 'expo'
-import {verifySmsPermissions} from './services/sms'
 import {getUserSettings} from './services/userSettings'
 import {verifyLocationPermissions, getCurrentLocation} from './services/location'
 
@@ -18,14 +17,13 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props)
-    ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP)
     this.init()
   }
 
   init = async () => {
     console.log('initializing...')
+    await ScreenOrientation.allowAsync(ScreenOrientation.Orientation.PORTRAIT_UP);
     try {
-      await verifySmsPermissions()
       await verifyLocationPermissions()
       this.setState({verifingPermission: false})
     } catch (error) {

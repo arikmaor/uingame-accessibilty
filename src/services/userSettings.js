@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 
 const STORAGE_KEY = 'userSettings'
 
-const settings = null
+let settings = null
 export async function getUserSettings() {
   try {
     if (!settings) {

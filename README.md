@@ -8,12 +8,11 @@ An accessibility helper app built with React-Native and Expo.
 `npm install -g expo-cli`
 
 ## Local Development
-1.
-2. Start the android emulator (from android studio) or download and install the expo app on your phone.
-3. Start the development server with one of this commands:
+1. Start the android emulator (from android studio) or download and install the expo app on your phone.
+2. Start the development server with one of this commands:
 ```sh
-yarn start   # for developing using your phone
-yarn android # for developing using the android emulator
+npm run start   # for developing using your phone
+npm run android # for developing using the android emulator
 ```
 
 ## Building a new apk
